@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ListItem from './ListItem';
 
 
 const DomainList = () => {
@@ -32,13 +33,6 @@ const DomainList = () => {
     setFilteredDatas(filteredResult);
   };
 
-  if (error) {
-    <div>
-      <h1>ERROR</h1>
-      <p>{error}</p>
-    </div>
-  }
-
   return (
     <div>
       {error ? <div className="alert alert-danger">{error}</div> : null}
@@ -48,11 +42,19 @@ const DomainList = () => {
         value={searchTerm}
         onChange={handleSearch}
       />
-      <ul>
-        {filteredDatas.map((domain) => (
-          <li key={domain.id}>{domain.id} | {domain.label}</li>
-        ))}
-      </ul>
+      <table className="table table-stripped table-bordered">
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>Url</th>
+          </tr>
+        </thead>
+        <tbody>
+            {filteredDatas.map((domain) => (
+            <ListItem key={domain.id} label={domain.label} name={domain.name} />
+            ))}
+        </tbody>
+      </table>
     </div>
   );
 };
